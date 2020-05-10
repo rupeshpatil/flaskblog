@@ -42,9 +42,13 @@ def register():
         return redirect(url_for('home'))
     return render_template('register.html', form=form, title='Register')
 
-@app.route('/login')
+@app.route('/login',  methods=['GET','POST'])
 def login():
     form = UserLoginForm()
+    if form.validate_on_submit():
+        if form.email.data == "admin@gmail.com":
+            flash("Login successfully!", "success")
+            return redirect(url_for("home"))
     return render_template('login.html', form=form, title='Login')
 
 if __name__ == "__main__":
